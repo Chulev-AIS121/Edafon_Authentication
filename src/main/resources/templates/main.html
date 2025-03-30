@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+</head>
+<body>
+<div>
+    <h1> Добро пожаловать, <span th:text="${username}"></span></h1>
+    <h2>
+        Попытка входа
+        <span th:text="${loginCount}"></span>
+    </h2>
+    <a href="/main?logout">Выход</a>
+
+</div>
+<h1> Вся информация о питании</h1>
+
+</body>
+</html>
