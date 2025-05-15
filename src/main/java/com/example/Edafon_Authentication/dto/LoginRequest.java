@@ -15,7 +15,6 @@ public class LoginRequest {
         private String password;
 
         @Schema(description = "Роль пользователя", example = "USER", required = true)
-        @NotBlank(message = "Role is required")
         private String role;
 
         public LoginRequest(String username, String password) {
