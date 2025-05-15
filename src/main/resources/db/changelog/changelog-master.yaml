@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: enable-uuid-extension
+      author: ivan
+      changes:
+        - sql:
+            sql: CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+  - changeSet:
+      id: 0-create-schema-auth
+      author: ivan
+      changes:
+        - sql:
+           splitStatements: false
+           stripComments: true
+           sql: CREATE SCHEMA IF NOT EXISTS auth;
+  - changeSet:
+      id: 1-create-users
+      author: ivan
+      changes:
+        - createTable:
+            tableName: users
+            schemaName: auth  # Указываем схему 'auth'
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: active
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
