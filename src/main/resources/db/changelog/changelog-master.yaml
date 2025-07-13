@@ -19,7 +19,7 @@ databaseChangeLog:
       changes:
         - createTable:
             tableName: users
-            schemaName: auth  # Указываем схему 'auth'
+            schemaName: auth
             columns:
               - column:
                   name: id

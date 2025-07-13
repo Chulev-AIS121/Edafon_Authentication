@@ -1,8 +1,6 @@
 // User.java
 package com.example.Edafon_Authentication.entity;
-
 import jakarta.persistence.*;
-
 import java.util.UUID;
 
 @Entity

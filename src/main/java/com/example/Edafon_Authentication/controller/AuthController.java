@@ -5,18 +5,16 @@ import com.example.Edafon_Authentication.dto.RegisterRequest;
 import com.example.Edafon_Authentication.dto.TokenResponse;
 import com.example.Edafon_Authentication.service.AuthService;
 import com.example.Edafon_Authentication.service.JwtTokenUtil;
-import com.example.Edafon_Authentication.exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.validation.Valid;
 
 import java.util.Map;
 
@@ -24,7 +22,6 @@ import java.util.Map;
 @RequestMapping("/api/auth")
 @Tag(name = "Аутентификация", description = "Методы регистрации, входа и валидации JWT токена")
 public class AuthController {
-
     private final AuthService authService;
     private final JwtTokenUtil jwtTokenUtil;
 
@@ -35,7 +32,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    @Operation(summary = "Регистрация нового пользователя", description = "Создаёт нового пользователя с указанными данными")
+    @Operation(summary = "Регистрация нового пользователя",
+               description = "Создаёт нового пользователя с указанными данными")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Пользователь успешно зарегистрирован"),
             @ApiResponse(responseCode = "409", description = "Пользователь с такими данными уже существует")

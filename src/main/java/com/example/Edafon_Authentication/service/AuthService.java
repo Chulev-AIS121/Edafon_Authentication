@@ -3,23 +3,23 @@ package com.example.Edafon_Authentication.service;
 import com.example.Edafon_Authentication.dto.LoginRequest;
 import com.example.Edafon_Authentication.dto.RegisterRequest;
 import com.example.Edafon_Authentication.entity.User;
-import com.example.Edafon_Authentication.exceptions.*;
+import com.example.Edafon_Authentication.exceptions.AccountDisabledException;
+import com.example.Edafon_Authentication.exceptions.EmailAlreadyExistsException;
+import com.example.Edafon_Authentication.exceptions.InvalidCredentialsException;
+import com.example.Edafon_Authentication.exceptions.UsernameAlreadyExistsException;
 import com.example.Edafon_Authentication.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 public class AuthService {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
-
     @Autowired
     public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenUtil jwtTokenUtil) {
         this.userRepository = userRepository;
@@ -30,16 +30,13 @@ public class AuthService {
     @Transactional
     public void register(RegisterRequest request) {
         log.info("Attempting to register user: {}", request.getUsername());
-
+        // Проверка username и  email
         try {
-            // Проверка username
             log.debug("Checking username uniqueness for: {}", request.getUsername());
             if (userRepository.existsByUsername(request.getUsername())) {
                 log.warn("Username already exists: {}", request.getUsername());
                 throw new UsernameAlreadyExistsException("Username already exists");
             }
-
-            // Проверка email
             log.debug("Checking email uniqueness for: {}", request.getEmail());
             if (userRepository.existsByEmail(request.getEmail())) {
                 log.warn("Email already exists: {}", request.getEmail());
